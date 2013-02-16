@@ -3,7 +3,8 @@
 
 --Créé par : turbogus
 
---code et graphisme : license gpl v2 ou superieur
+-- code licence gpl v2 ou superieur
+-- graphisme sous licence CC-BY-NC-SA
 
 --***********
 --***********
