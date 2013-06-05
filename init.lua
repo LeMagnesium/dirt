@@ -1,47 +1,18 @@
+--[[ 
 
---***********
---***********
+DIRT
+mod permettant de creer d'utiliser la terre récoltée dans minetest
+
+Créé par turbogus
+licence gpl 2 ou supérieur ( graphisme et code )
+
+]]--
 
 -- Glaise
 minetest.register_craftitem("dirt:dirt_clay", {
 	description = "glaise",
 	inventory_image = "dirt_clay.png",
 })
-
---***********
---***********
-
---OUTiL : BLOC MOULiN ( pour creer de la glaise à partir de clay_lump et de dirt )
-minetest.register_craft({
-	output = 'node "dirt:moulin" 1',
-	recipe = {
-		{'node "default:cobble"', 'node "default:stick"', 'node "default:cobble"' },
-		{'node "default:cobble"', 'node "bucket:bucket_water"', 'node "default:cobble' },
-		{'node "default:cobble"', 'node "default:cobble"', 'node "default:cobble' },
-		}
-})
-minetest.register_node("dirt:moulin", {
-	description = "moulin",
-	tiles = {"moulin.png"},
-	is_ground_content = false,
-	walkable = true,
-	pointable = true,
-	diggable = true,
-	groups = {cracky=2,crumbly=3},
---	sounds = default.node_sound_stone_defaults(),
-	drop = "dirt:moulin" ,
-})
-minetest.register_on_punchnode(function(p, node, player)
-	if node.name=="dirt:moulin" and player:get_inventory():contains_item('main', 'default:clay_lump') and player:get_inventory():contains_item('main', 'default:dirt') then
-		player:get_inventory():add_item('main', 'dirt:dirt_clay 12' )
-		player:get_inventory():remove_item('main', 'default:clay_lump')
-		player:get_inventory():remove_item('main', 'default:dirt')
-	end
-
-end)
-
---***********
---***********
 
 -- Block de terre :
 minetest.register_craft({
@@ -60,12 +31,8 @@ minetest.register_node("dirt:dirt_block", {
 	pointable = true,
 	diggable = true,
 	groups = {cracky=2,crumbly=3},
---	sounds = default.node_sound_stone_defaults(),
 	drop ='node  "default:dirt" 4',
 })
-
---***********
---***********
 
 -- Brique de terre :
 minetest.register_craftitem("dirt:dirt_brick", {
@@ -81,7 +48,6 @@ minetest.register_craft({
 })
 
 -- Brique de terre cuite :
-
 minetest.register_craftitem("dirt:dirt_brick_rusted", {
 	description = "brique de terre cuite",
 	inventory_image = "dirt_brick_rusted.png",
@@ -92,9 +58,6 @@ minetest.register_craft({
 	output = "dirt:dirt_brick_rusted",
 	recipe = "dirt:dirt_brick",
 })
-
---***********
---***********
 
 -- Block de brique en terre :
 minetest.register_craft({
@@ -112,7 +75,6 @@ minetest.register_node("dirt:dirt_brick_wall", {
 	pointable = true,
 	diggable = true,
 	groups = {cracky=2,crumbly=3},
---	sounds = default.node_sound_stone_defaults(),
 	drop ='node  "dirt:dirt_brick_rusted" 4',
 })
 
@@ -136,11 +98,35 @@ minetest.register_node("dirt:torchis", {
 	drop = "dirt:torchis",
 })
 
---***********
---***********
+--OUTiL : BLOC MOULiN ( pour creer de la glaise à partir de clay_lump et de dirt )
+minetest.register_craft({
+	output = 'node "dirt:moulin" 1',
+	recipe = {
+		{'node "default:cobble"', 'node "default:stick"', 'node "default:cobble"' },
+		{'node "default:cobble"', 'node "bucket:bucket_water"', 'node "default:cobble' },
+		{'node "default:cobble"', 'node "default:cobble"', 'node "default:cobble' },
+		}
+})
+minetest.register_node("dirt:moulin", {
+	description = "moulin",
+	tiles = {"moulin.png"},
+	is_ground_content = false,
+	walkable = true,
+	pointable = true,
+	diggable = true,
+	groups = {cracky=2,crumbly=3},
+	drop = "dirt:moulin" ,
+})
+minetest.register_on_punchnode(function(p, node, player)
+	if node.name=="dirt:moulin" and player:get_inventory():contains_item('main', 'default:clay_lump') and player:get_inventory():contains_item('main', 'default:dirt') then
+		player:get_inventory():add_item('main', 'dirt:dirt_clay 12' )
+		player:get_inventory():remove_item('main', 'default:clay_lump')
+		player:get_inventory():remove_item('main', 'default:dirt')
+	end
+
+end)
 
 -- FOUR en terre cuite :
-
 minetest.register_craft({
 	output = 'dirt:furnace',
 	recipe = {
@@ -150,14 +136,6 @@ minetest.register_craft({
 		}
 })
 
---default.furnace_inactive_formspec = 
---	"size[8,9]"..
---	"image[2,2;1,1;dirt_furnace_fire_bg.png]"..
---	"list[current_name;fuel;2,3;1,1;]"..
---	"list[current_name;src;2,1;1,1;]"..
---	"list[current_name;dst;5,1;2,2;]"..
---	"list[current_player;main;0,5;8,4;]"
-
 	
 minetest.register_node("dirt:furnace", {
 	description = "Furnace",
@@ -166,7 +144,6 @@ minetest.register_node("dirt:furnace", {
 	paramtype2 = "facedir",
 	groups = {cracky=2},
 	legacy_facedir_simple = true,
-	--sounds = default.node_sound_stone_defaults(),
 	on_construct = function(pos)
 		local meta = minetest.env:get_meta(pos)
 		meta:set_string("formspec", default.furnace_inactive_formspec)
@@ -199,7 +176,6 @@ minetest.register_node("dirt:furnace_active", {
 	drop = "dirt:furnace",
 	groups = {cracky=2, not_in_creative_inventory=1},
 	legacy_facedir_simple = true,
-	--sounds = default.node_sound_stone_defaults(),
 	on_construct = function(pos)
 		local meta = minetest.env:get_meta(pos)
 		meta:set_string("formspec", default.furnace_inactive_formspec)
@@ -339,6 +315,3 @@ minetest.register_abm({
 })
 
 
-
---***********
---***********
