@@ -1,10 +1,3 @@
--- Description : 
--- Utilisation de la terre pour creer different bloc et objet
-
---Créé par : turbogus
-
--- code licence gpl v2 ou superieur
--- graphisme sous licence CC-BY-NC-SA
 
 --***********
 --***********
@@ -18,7 +11,7 @@ minetest.register_craftitem("dirt:dirt_clay", {
 --***********
 --***********
 
---OUTIL : BLOC MOULIN ( pour creer de la glaise à partir de clay_lump et de dirt )
+--OUTiL : BLOC MOULiN ( pour creer de la glaise � partir de clay_lump et de dirt )
 minetest.register_craft({
 	output = 'node "dirt:moulin" 1',
 	recipe = {
@@ -105,7 +98,7 @@ minetest.register_craft({
 
 -- Block de brique en terre :
 minetest.register_craft({
-	output = 'node "dirt:dirt_brick_wall" 1',
+	output = 'node "dirt:dirt_brick_wall" 4',
 	recipe = {
 		{'node "dirt:dirt_brick_rusted"', 'node "dirt:dirt_brick_rusted"' },
 		{'node "dirt:dirt_brick_rusted"', 'node "dirt:dirt_brick_rusted"'},
@@ -121,6 +114,26 @@ minetest.register_node("dirt:dirt_brick_wall", {
 	groups = {cracky=2,crumbly=3},
 --	sounds = default.node_sound_stone_defaults(),
 	drop ='node  "dirt:dirt_brick_rusted" 4',
+})
+
+-- Torchis
+minetest.register_craft({
+	output = '"dirt:torchis" 4',
+	recipe = {
+		{"default:papyrus"},
+		{"dirt:dirt_clay"},
+	}
+})
+
+minetest.register_node("dirt:torchis", {
+	description = "torchis",
+	tiles = {"torchis.png"},
+	is_ground_content = false,
+	walkable = true,
+	pointable = true,
+	diggable = true,
+	groups = {cracky=2,crumbly=3},
+	drop = "dirt:torchis",
 })
 
 --***********
@@ -329,9 +342,3 @@ minetest.register_abm({
 
 --***********
 --***********
-
-
-
---***********
---***********
-
