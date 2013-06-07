@@ -68,7 +68,7 @@ minetest.register_craft({
 	}
 })
 minetest.register_node("dirt:dirt_brick_wall", {
-	description = "bloc de brick en terre",
+	description = "bloc de briques en terre",
 	tiles = {"dirt_brick_wall.png"},
 	is_ground_content = false,
 	walkable = true,
@@ -138,7 +138,7 @@ minetest.register_craft({
 
 	
 minetest.register_node("dirt:furnace", {
-	description = "Furnace",
+	description = "Four en brique de terre cuite",
 	tiles = {"dirt_furnace_top.png", "dirt_furnace_bottom.png", "dirt_furnace_side.png",
 		"dirt_furnace_side.png", "dirt_furnace_side.png", "dirt_furnace_front.png"},
 	paramtype2 = "facedir",
