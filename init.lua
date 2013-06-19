@@ -314,4 +314,48 @@ minetest.register_abm({
 	end,
 })
 
+--OUTIL : TAMIS ( pour obtenir des silex )
+--OUTiL : BLOC MOULiN ( pour creer de la glaise à partir de clay_lump et de dirt )
+minetest.register_craft({
+	output = 'node "dirt:tamis" 1',
+	recipe = {
+		{'node "default:wood"', 'node "default:stell_ingot"', 'node "default:wood"' },
+		
+		}
+})
 
+minetest.register_node("dirt:tamis", {
+	description = "tamis ( pour récupérer des silex )",
+	tiles = {"dirt_tamis_dessus_dessous.png", "dirt_tamis_dessus_dessous.png", "dirt_wood.png",
+		"dirt_wood.png", "dirt_wood.png", "dirt_wood.png"},
+	is_ground_content = false,
+	walkable = true,
+	pointable = true,
+	diggable = true,
+	groups = {cracky=2,crumbly=3},
+	drop = "dirt:tamis" ,
+	
+})
+
+--table pour le silex :
+
+local alea = {1,2,3}
+
+minetest.register_on_punchnode(function(p, node, player)
+	local nombre1=math.random(1,table.getn(alea))
+	local nombre2=math.random(1,table.getn(alea))
+	if node.name=="dirt:tamis" and player:get_inventory():contains_item('main', 'default:dirt') and nombre1~=nombre2 then
+		player:get_inventory():remove_item('main', 'default:dirt')
+	end
+	if node.name=="dirt:tamis" and player:get_inventory():contains_item('main', 'default:dirt') and nombre1==nombre2 then
+		player:get_inventory():remove_item('main', 'default:dirt')
+		player:get_inventory():add_item('main', 'dirt:silex')
+	end
+end)
+
+
+--silex
+minetest.register_craftitem("dirt:silex", {
+	description = "morceau de silex",
+	inventory_image = "dirt_silex.png",
+})
