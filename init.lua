@@ -8,6 +8,18 @@ licence gpl 2 ou supérieur ( graphisme et code )
 
 ]]--
 
+--Alias :
+minetest.register_alias("dirt:dirt_clay","dirt_clay")
+minetest.register_alias("dirt:dirt_block","dirt_block")
+minetest.register_alias("dirt:dirt_brick","dirt_brick")
+minetest.register_alias("dirt:dirt_brick_rusted","dirt_brick_rusted")
+minetest.register_alias("dirt:dirt_brick_wall","dirt_brick_wall")
+minetest.register_alias("dirt:moulin","moulin")
+minetest.register_alias("dirt:tamis","tamis")
+minetest.register_alias("dirt:silex","silex")
+minetest.register_alias("dirt:silex_block","silex_block")
+minetest.register_alias("dirt:silex_hammer","silex_hammer")
+
 -- Glaise
 minetest.register_craftitem("dirt:dirt_clay", {
 	description = "glaise",
@@ -314,18 +326,20 @@ minetest.register_abm({
 	end,
 })
 
+--==============================================================================================
+
 --OUTIL : TAMIS ( pour obtenir des silex )
 --OUTiL : BLOC MOULiN ( pour creer de la glaise à partir de clay_lump et de dirt )
 minetest.register_craft({
 	output = 'node "dirt:tamis" 1',
 	recipe = {
-		{'node "default:wood"', 'node "default:stell_ingot"', 'node "default:wood"' },
-		
+		{'node "default:tree"', 'node "default:steel_ingot"', 'node "default:tree"' },
+		{'node "default:tree"', 'node "default:tree"', 'node "default:tree"' },
 		}
 })
 
 minetest.register_node("dirt:tamis", {
-	description = "tamis ( pour récupérer des silex )",
+	description = "tamis - pour recupérer des silex",
 	tiles = {"dirt_tamis_dessus_dessous.png", "dirt_tamis_dessus_dessous.png", "dirt_wood.png",
 		"dirt_wood.png", "dirt_wood.png", "dirt_wood.png"},
 	is_ground_content = false,
@@ -358,4 +372,52 @@ end)
 minetest.register_craftitem("dirt:silex", {
 	description = "morceau de silex",
 	inventory_image = "dirt_silex.png",
+})
+
+--silex bloc :
+minetest.register_craft({
+	output = "dirt:silex_block",
+	recipe = {
+		{"dirt:silex","dirt:silex","dirt:silex" },
+		{"dirt:silex","dirt:silex","dirt:silex"},
+		{"dirt:silex","dirt:silex","dirt:silex"},
+	}
+})
+minetest.register_craft({
+	output = "dirt:silex 9",
+	recipe = {
+		{"dirt:silex_block"},
+	}
+})
+minetest.register_node("dirt:silex_block", {
+	description = "bloc de silex ( extrement dur )",
+	tiles = {"dirt_silex_block.png"},
+	is_ground_content = false,
+	walkable = true,
+	pointable = true,
+	diggable = true,
+	groups = {cracky=1},
+	drop ="dirt:silex_block",
+})
+
+--hammer :
+minetest.register_craft({
+	output = "dirt:silex_hammer",
+	recipe = {
+		{"dirt:silex_block","default:papyrus","dirt:silex_block" },
+		{"","default:stick",""},
+		{"","default:stick",""},
+	}
+})
+minetest.register_tool("dirt:silex_hammer", {
+	description = "Marteau en silex",
+	inventory_image = "dirt_silex_hammer.png",
+	tool_capabilities = {
+		full_punch_interval = 0.9,
+		max_drop_level=3,
+		groupcaps={
+			cracky = {times={[1]=4, [2]=1.6, [3]=0.80}, uses=40, maxlevel=3},
+		},
+		damage_groups = {fleshy=4},
+	},
 })
