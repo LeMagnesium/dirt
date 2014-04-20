@@ -1,10 +1,10 @@
 --[[ 
 
 DIRT
-mod permettant de creer d'utiliser la terre récoltée dans minetest
+mod permettant de creer d'utiliser la terre rï¿½coltï¿½e dans minetest
 
-Créé par turbogus
-licence gpl 2 ou supérieur ( graphisme et code )
+Crï¿½ï¿½ par turbogus
+licence gpl 2 ou supï¿½rieur ( graphisme et code )
 
 ]]--
 
@@ -133,7 +133,7 @@ minetest.register_node("dirt:torchis", {
 	}),
 })
 
---OUTiL : BLOC MOULiN ( pour creer de la glaise à partir de clay_lump et de dirt )
+--OUTiL : BLOC MOULiN ( pour creer de la glaise ï¿½ partir de clay_lump et de dirt )
 minetest.register_craft({
 	output = 'node "dirt:moulin" 1',
 	recipe = {
@@ -359,7 +359,7 @@ minetest.register_abm({
 --==============================================================================================
 
 --OUTIL : TAMIS ( pour obtenir des silex )
---OUTiL : BLOC MOULiN ( pour creer de la glaise à partir de clay_lump et de dirt )
+--OUTiL : BLOC MOULiN ( pour creer de la glaise ï¿½ partir de clay_lump et de dirt )
 minetest.register_craft({
 	output = 'node "dirt:tamis" 1',
 	recipe = {
