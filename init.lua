@@ -26,6 +26,17 @@ minetest.register_craftitem("dirt:dirt_clay", {
 	inventory_image = "dirt_clay.png",
 })
 
+--craft de la glaise ( si le joueur n'a pas de moulin ). NB : le joueur obtient moin de glaise que si il utilise le moulin
+minetest.register_craft({
+	output = 'node "dirt:dirt_clay" 8',
+	recipe = {
+		{"default:dirt"},
+		{"default:gravel"},
+		{"bucket:bucket_water"},
+		},
+	replacements = {{"bucket:bucket_water", "bucket:bucket_empty"}},
+})
+
 -- Block de terre :
 minetest.register_craft({
 	output = 'node "dirt:dirt_block" 1',
@@ -114,10 +125,11 @@ minetest.register_node("dirt:torchis", {
 minetest.register_craft({
 	output = 'node "dirt:moulin" 1',
 	recipe = {
-		{'node "default:cobble"', 'node "default:stick"', 'node "default:cobble"' },
-		{'node "default:cobble"', 'node "bucket:bucket_water"', 'node "default:cobble' },
-		{'node "default:cobble"', 'node "default:cobble"', 'node "default:cobble' },
-		}
+		{'node "default:wood"', 'node "default:stick"', 'node "default:wood"' },
+		{'node "default:wood"', 'node "bucket:bucket_water"', 'node "default:wood' },
+		{'node "default:wood"', 'node "default:wood"', 'node "default:wood' },
+		},
+	replacements = {{"bucket:bucket_water", "bucket:bucket_empty"}},
 })
 minetest.register_node("dirt:moulin", {
 	description = "moulin",
@@ -126,14 +138,16 @@ minetest.register_node("dirt:moulin", {
 	walkable = true,
 	pointable = true,
 	diggable = true,
-	groups = {cracky=2,crumbly=3},
-	drop = "dirt:moulin" ,
+	groups = {cracky=2},
+	drop = "dirt:moulin",
 })
 minetest.register_on_punchnode(function(p, node, player)
-	if node.name=="dirt:moulin" and player:get_inventory():contains_item('main', 'default:clay_lump') and player:get_inventory():contains_item('main', 'default:dirt') then
-		player:get_inventory():add_item('main', 'dirt:dirt_clay 12' )
-		player:get_inventory():remove_item('main', 'default:clay_lump')
+	if node.name=="dirt:moulin" and player:get_inventory():contains_item('main', 'default:dirt') and player:get_inventory():contains_item('main', 'bucket:bucket_water') and player:get_inventory():contains_item('main', 'default:gravel') then
+		player:get_inventory():add_item('main', 'dirt:dirt_clay 16' )
+		player:get_inventory():add_item('main', 'bucket:bucket_empty' )
 		player:get_inventory():remove_item('main', 'default:dirt')
+		player:get_inventory():remove_item('main', 'bucket:bucket_water')
+		player:get_inventory():remove_item('main', 'default:gravel')
 	end
 
 end)
