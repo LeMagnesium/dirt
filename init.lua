@@ -339,7 +339,7 @@ minetest.register_craft({
 })
 
 minetest.register_node("dirt:tamis", {
-	description = "tamis - pour recupérer des silex",
+	description = "tamis pour recuperer des silex",
 	tiles = {"dirt_tamis_dessus_dessous.png", "dirt_tamis_dessus_dessous.png", "dirt_wood.png",
 		"dirt_wood.png", "dirt_wood.png", "dirt_wood.png"},
 	is_ground_content = false,
