@@ -54,7 +54,11 @@ minetest.register_node("dirt:dirt_block", {
 	pointable = true,
 	diggable = true,
 	groups = {cracky=2,crumbly=3},
-	drop ='node  "default:dirt" 4',
+	drop = "dirt:dirt_block",
+	sounds = ({
+		footstep = {name="poc", gain=0.25},
+		dug = {name="poc", gain=0.75},
+	}),
 })
 
 -- Brique de terre :
@@ -84,7 +88,7 @@ minetest.register_craft({
 
 -- Block de brique en terre :
 minetest.register_craft({
-	output = 'node "dirt:dirt_brick_wall" 4',
+	output = 'node "dirt:dirt_brick_wall"',
 	recipe = {
 		{'node "dirt:dirt_brick_rusted"', 'node "dirt:dirt_brick_rusted"' },
 		{'node "dirt:dirt_brick_rusted"', 'node "dirt:dirt_brick_rusted"'},
@@ -97,8 +101,12 @@ minetest.register_node("dirt:dirt_brick_wall", {
 	walkable = true,
 	pointable = true,
 	diggable = true,
-	groups = {cracky=2,crumbly=3},
+	groups = {cracky=2, stone=1},
 	drop ='node  "dirt:dirt_brick_rusted" 4',
+	sounds = ({
+		footstep = {name="poc", gain=0.25},
+		dug = {name="poc", gain=0.75},
+	}),
 })
 
 -- Torchis
@@ -119,6 +127,10 @@ minetest.register_node("dirt:torchis", {
 	diggable = true,
 	groups = {cracky=2,crumbly=3},
 	drop = "dirt:torchis",
+	sounds = ({
+		footstep = {name="poc", gain=0.25},
+		dug = {name="poc", gain=0.75},
+	}),
 })
 
 --OUTiL : BLOC MOULiN ( pour creer de la glaise à partir de clay_lump et de dirt )
@@ -140,6 +152,10 @@ minetest.register_node("dirt:moulin", {
 	diggable = true,
 	groups = {cracky=2},
 	drop = "dirt:moulin",
+	sounds = ({
+		footstep = {name="poc", gain=0.25},
+		dug = {name="poc", gain=0.75},
+	}),
 })
 minetest.register_on_punchnode(function(p, node, player)
 	if node.name=="dirt:moulin" and player:get_inventory():contains_item('main', 'default:dirt') and player:get_inventory():contains_item('main', 'bucket:bucket_water') and player:get_inventory():contains_item('main', 'default:gravel') then
@@ -362,6 +378,10 @@ minetest.register_node("dirt:tamis", {
 	diggable = true,
 	groups = {cracky=2,crumbly=3},
 	drop = "dirt:tamis" ,
+	sounds = ({
+		footstep = {name="poc", gain=0.25},
+		dug = {name="poc", gain=0.75},
+	}),
 	
 })
 
@@ -412,6 +432,10 @@ minetest.register_node("dirt:silex_block", {
 	diggable = true,
 	groups = {cracky=1},
 	drop ="dirt:silex_block",
+	sounds = ({
+		footstep = {name="poc", gain=0.25},
+		dug = {name="poc", gain=0.75},
+	}),
 })
 
 --hammer :
