@@ -1,10 +1,10 @@
 --[[ 
 
 DIRT
-mod permettant de creer d'utiliser la terre récoltée dans minetest
+mod permettant de creer d'utiliser la terre rÃ©coltÃ©e dans minetest
 
-Créé par turbogus
-licence gpl 2 ou supérieur ( graphisme et code )
+CrÃ©Ã© par turbogus
+licence gpl 2 ou supÃ©rieur ( graphisme et code )
 
 ]]--
 
@@ -26,7 +26,7 @@ minetest.register_craftitem("dirt:dirt_clay", {
 	inventory_image = "dirt_clay.png",
 })
 
---craft de la glaise ( si le joueur n'a pas de moulin ). NB : le joueur obtient moin de glaise que si il utilise le moulin
+-- Craft de la glaise ( si le joueur n'a pas de moulin ). NB : le joueur obtient moin de glaise que si il utilise le moulin
 minetest.register_craft({
 	output = 'node "dirt:dirt_clay" 8',
 	recipe = {
@@ -39,20 +39,17 @@ minetest.register_craft({
 
 -- Block de terre :
 minetest.register_craft({
-	output = 'node "dirt:dirt_block" 1',
+	output = "dirt:dirt_block",
 	recipe = {
-		{'node "default:dirt"', 'node "default:dirt"' },
-		{'node "default:dirt"', 'node "default:dirt"' },
-		}
+		{"default:dirt", "default:dirt"},
+		{"default:dirt", "default:dirt"},
+	}
 })
 
 minetest.register_node("dirt:dirt_block", {
 	description = "bloc de terre",
 	tiles = {"dirt_block.png"},
 	is_ground_content = false,
-	walkable = true,
-	pointable = true,
-	diggable = true,
 	groups = {cracky=2,crumbly=3},
 	drop = "dirt:dirt_block",
 	sounds = ({
@@ -68,9 +65,9 @@ minetest.register_craftitem("dirt:dirt_brick", {
 })
 
 minetest.register_craft({
-	output = 'node "dirt:dirt_brick" 1',
+	output = "dirt:dirt_brick",
 	recipe = {
-		{'node "dirt:dirt_clay"', 'node "dirt:dirt_clay"' },
+		{"dirt:dirt_clay", "dirt:dirt_clay" },
 	}
 })
 
@@ -88,21 +85,19 @@ minetest.register_craft({
 
 -- Block de brique en terre :
 minetest.register_craft({
-	output = 'node "dirt:dirt_brick_wall"',
+	output = "dirt:dirt_brick_wall",
 	recipe = {
-		{'node "dirt:dirt_brick_rusted"', 'node "dirt:dirt_brick_rusted"' },
-		{'node "dirt:dirt_brick_rusted"', 'node "dirt:dirt_brick_rusted"'},
+		{"dirt:dirt_brick_rusted", "dirt:dirt_brick_rusted"},
+		{"dirt:dirt_brick_rusted", "dirt:dirt_brick_rusted"},
 	}
 })
+
 minetest.register_node("dirt:dirt_brick_wall", {
 	description = "bloc de briques en terre",
 	tiles = {"dirt_brick_wall.png"},
 	is_ground_content = false,
-	walkable = true,
-	pointable = true,
-	diggable = true,
 	groups = {cracky=2, stone=1},
-	drop ='node  "dirt:dirt_brick_rusted" 4',
+	drop ="dirt:dirt_brick_rusted 4",
 	sounds = ({
 		footstep = {name="poc", gain=0.25},
 		dug = {name="poc", gain=0.75},
@@ -111,7 +106,7 @@ minetest.register_node("dirt:dirt_brick_wall", {
 
 -- Torchis
 minetest.register_craft({
-	output = '"dirt:torchis" 4',
+	output = "dirt:torchis 4",
 	recipe = {
 		{"default:papyrus"},
 		{"dirt:dirt_clay"},
@@ -122,9 +117,6 @@ minetest.register_node("dirt:torchis", {
 	description = "torchis",
 	tiles = {"torchis.png"},
 	is_ground_content = false,
-	walkable = true,
-	pointable = true,
-	diggable = true,
 	groups = {cracky=2,crumbly=3},
 	drop = "dirt:torchis",
 	sounds = ({
@@ -133,23 +125,21 @@ minetest.register_node("dirt:torchis", {
 	}),
 })
 
---OUTiL : BLOC MOULiN ( pour creer de la glaise à partir de clay_lump et de dirt )
+-- OUTIL : BLOC MOULiN ( pour creer de la glaise ï¿½ partir de clay_lump et de dirt )
 minetest.register_craft({
-	output = 'node "dirt:moulin" 1',
+	output = "dirt:moulin",
 	recipe = {
-		{'node "default:wood"', 'node "default:stick"', 'node "default:wood"' },
-		{'node "default:wood"', 'node "bucket:bucket_water"', 'node "default:wood' },
-		{'node "default:wood"', 'node "default:wood"', 'node "default:wood' },
+		{"default:wood", "default:stick", "default:wood" },
+		{"default:wood", "bucket:bucket_water", "default:wood"},
+		{"default:wood", "default:wood", "default:wood"},
 		},
 	replacements = {{"bucket:bucket_water", "bucket:bucket_empty"}},
 })
+
 minetest.register_node("dirt:moulin", {
 	description = "moulin",
 	tiles = {"moulin.png"},
 	is_ground_content = false,
-	walkable = true,
-	pointable = true,
-	diggable = true,
 	groups = {cracky=2},
 	drop = "dirt:moulin",
 	sounds = ({
@@ -157,13 +147,18 @@ minetest.register_node("dirt:moulin", {
 		dug = {name="poc", gain=0.75},
 	}),
 })
+
 minetest.register_on_punchnode(function(p, node, player)
-	if node.name=="dirt:moulin" and player:get_inventory():contains_item('main', 'default:dirt') and player:get_inventory():contains_item('main', 'bucket:bucket_water') and player:get_inventory():contains_item('main', 'default:gravel') then
-		player:get_inventory():add_item('main', 'dirt:dirt_clay 16' )
-		player:get_inventory():add_item('main', 'bucket:bucket_empty' )
-		player:get_inventory():remove_item('main', 'default:dirt')
-		player:get_inventory():remove_item('main', 'bucket:bucket_water')
-		player:get_inventory():remove_item('main', 'default:gravel')
+    local pinv = (player or {get_inventory = function(self) end}):get_inventory()
+    if not pinv then
+      return
+    end
+	if node.name=="dirt:moulin" and pinv:contains_item('main', 'default:dirt') and pinv:contains_item('main', 'bucket:bucket_water') and pinv:contains_item('main', 'default:gravel') then
+		pinv:add_item('main', 'dirt:dirt_clay 16' )
+		pinv:add_item('main', 'bucket:bucket_empty' )
+		pinv:remove_item('main', 'default:dirt')
+		pinv:remove_item('main', 'bucket:bucket_water')
+		pinv:remove_item('main', 'default:gravel')
 	end
 
 end)
@@ -187,7 +182,7 @@ minetest.register_node("dirt:furnace", {
 	groups = {cracky=2},
 	legacy_facedir_simple = true,
 	on_construct = function(pos)
-		local meta = minetest.env:get_meta(pos)
+		local meta = minetest.get_meta(pos)
 		meta:set_string("formspec", default.furnace_inactive_formspec)
 		meta:set_string("infotext", "Furnace")
 		local inv = meta:get_inventory()
@@ -196,7 +191,7 @@ minetest.register_node("dirt:furnace", {
 		inv:set_size("dst", 4)
 	end,
 	can_dig = function(pos,player)
-		local meta = minetest.env:get_meta(pos);
+		local meta = minetest.get_meta(pos);
 		local inv = meta:get_inventory()
 		if not inv:is_empty("fuel") then
 			return false
@@ -219,7 +214,7 @@ minetest.register_node("dirt:furnace_active", {
 	groups = {cracky=2, not_in_creative_inventory=1},
 	legacy_facedir_simple = true,
 	on_construct = function(pos)
-		local meta = minetest.env:get_meta(pos)
+		local meta = minetest.get_meta(pos)
 		meta:set_string("formspec", default.furnace_inactive_formspec)
 		meta:set_string("infotext", "Furnace");
 		local inv = meta:get_inventory()
@@ -228,7 +223,7 @@ minetest.register_node("dirt:furnace_active", {
 		inv:set_size("dst", 4)
 	end,
 	can_dig = function(pos,player)
-		local meta = minetest.env:get_meta(pos);
+		local meta = minetest.get_meta(pos);
 		local inv = meta:get_inventory()
 		if not inv:is_empty("fuel") then
 			return false
@@ -242,16 +237,16 @@ minetest.register_node("dirt:furnace_active", {
 })
 
 function hacky_swap_node(pos,name)
-	local node = minetest.env:get_node(pos)
-	local meta = minetest.env:get_meta(pos)
+	local node = minetest.get_node(pos)
+	local meta = minetest.get_meta(pos)
 	local meta0 = meta:to_table()
 	if node.name == name then
 		return
 	end
 	node.name = name
 	local meta0 = meta:to_table()
-	minetest.env:set_node(pos,node)
-	meta = minetest.env:get_meta(pos)
+	minetest.set_node(pos,node)
+	meta = minetest.get_meta(pos)
 	meta:from_table(meta0)
 end
 
@@ -260,7 +255,7 @@ minetest.register_abm({
 	interval = 1.0,
 	chance = 1,
 	action = function(pos, node, active_object_count, active_object_count_wider)
-		local meta = minetest.env:get_meta(pos)
+		local meta = minetest.get_meta(pos)
 		for i, name in ipairs({
 				"fuel_totaltime",
 				"fuel_time",
@@ -358,14 +353,14 @@ minetest.register_abm({
 
 --==============================================================================================
 
---OUTIL : TAMIS ( pour obtenir des silex )
---OUTiL : BLOC MOULiN ( pour creer de la glaise à partir de clay_lump et de dirt )
+-- OUTIL : TAMIS ( pour obtenir des silex )
+-- OUTIL : BLOC MOULIN ( pour creer de la glaise Ã  partir de clay_lump et de dirt )
 minetest.register_craft({
-	output = 'node "dirt:tamis" 1',
+	output = "dirt:tamis",
 	recipe = {
-		{'node "default:tree"', 'node "default:steel_ingot"', 'node "default:tree"' },
-		{'node "default:tree"', 'node "default:tree"', 'node "default:tree"' },
-		}
+		{"default:tree", "default:steel_ingot", "default:tree" },
+		{"default:tree", "default:tree", "default:tree"},
+	}
 })
 
 minetest.register_node("dirt:tamis", {
@@ -373,9 +368,6 @@ minetest.register_node("dirt:tamis", {
 	tiles = {"dirt_tamis_dessus_dessous.png", "dirt_tamis_dessus_dessous.png", "dirt_wood.png",
 		"dirt_wood.png", "dirt_wood.png", "dirt_wood.png"},
 	is_ground_content = false,
-	walkable = true,
-	pointable = true,
-	diggable = true,
 	groups = {cracky=2,crumbly=3},
 	drop = "dirt:tamis" ,
 	sounds = ({
@@ -385,30 +377,32 @@ minetest.register_node("dirt:tamis", {
 	
 })
 
---table pour le silex :
+-- Table pour le silex :
 
 local alea = {1,2,3}
 
 minetest.register_on_punchnode(function(p, node, player)
 	local nombre1=math.random(1,table.getn(alea))
 	local nombre2=math.random(1,table.getn(alea))
-	if node.name=="dirt:tamis" and player:get_inventory():contains_item('main', 'default:dirt') and nombre1~=nombre2 then
-		player:get_inventory():remove_item('main', 'default:dirt')
+    local pinv = (player or {get_inventory = function(self) end}):get_inventory()
+    if not pinv then return end
+	if node.name=="dirt:tamis" and pinv:contains_item('main', 'default:dirt') and nombre1~=nombre2 then
+		pinv:remove_item('main', 'default:dirt')
 	end
-	if node.name=="dirt:tamis" and player:get_inventory():contains_item('main', 'default:dirt') and nombre1==nombre2 then
-		player:get_inventory():remove_item('main', 'default:dirt')
-		player:get_inventory():add_item('main', 'dirt:silex')
+	if node.name=="dirt:tamis" and pinv:contains_item('main', 'default:dirt') and nombre1==nombre2 then
+		pinv:remove_item('main', 'default:dirt')
+		pinv:add_item('main', 'dirt:silex')
 	end
 end)
 
 
---silex
+-- Silex
 minetest.register_craftitem("dirt:silex", {
 	description = "morceau de silex",
 	inventory_image = "dirt_silex.png",
 })
 
---silex bloc :
+-- Silex bloc :
 minetest.register_craft({
 	output = "dirt:silex_block",
 	recipe = {
@@ -417,19 +411,18 @@ minetest.register_craft({
 		{"dirt:silex","dirt:silex","dirt:silex"},
 	}
 })
+
 minetest.register_craft({
 	output = "dirt:silex 9",
 	recipe = {
 		{"dirt:silex_block"},
 	}
 })
+
 minetest.register_node("dirt:silex_block", {
 	description = "bloc de silex ( extrement dur )",
 	tiles = {"dirt_silex_block.png"},
 	is_ground_content = false,
-	walkable = true,
-	pointable = true,
-	diggable = true,
 	groups = {cracky=1},
 	drop ="dirt:silex_block",
 	sounds = ({
@@ -438,7 +431,7 @@ minetest.register_node("dirt:silex_block", {
 	}),
 })
 
---hammer :
+-- Hammer :
 minetest.register_craft({
 	output = "dirt:silex_hammer",
 	recipe = {
@@ -447,6 +440,7 @@ minetest.register_craft({
 		{"","default:stick",""},
 	}
 })
+
 minetest.register_tool("dirt:silex_hammer", {
 	description = "Marteau en silex",
 	inventory_image = "dirt_silex_hammer.png",
